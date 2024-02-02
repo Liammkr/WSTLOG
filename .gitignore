@@ -3,7 +3,7 @@
 
 # Ignore configuration files
 config.json
-
+creds.json
 # Ignore environment files (if you use any)
 .env
 
