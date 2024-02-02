@@ -1,17 +1,14 @@
-import json
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
-# Read the configuration file
-with open('config.json') as config_file:
-    config = json.load(config_file)
-
-# Initialize Firebase with the service account key
-cred = credentials.Certificate(config['service_account_key_path'])
+# Initialize Firebase with your service account credentials
+cred = credentials.Certificate("testcreds.json")
 firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://logtestwst-default-rtdb.firebaseio.com/'
+    'databaseURL': 'https://logtestwst-default-rtdb.firebaseio.com'
 })
+
+# Get a reference to the Firebase Realtime Database
 ref = db.reference('/')
 
 # Define the data you want to write

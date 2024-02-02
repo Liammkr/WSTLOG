@@ -1,0 +1,2 @@
+credspath="creds.json"
+firebaseappurlpath="pathtoyourfirebaseapp.com"
