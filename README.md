@@ -1,2 +1,2 @@
 # WSTLOG
-Educational Python Key Logger For Experimental Use
+Educational Python Key Logger For Experimental Us
