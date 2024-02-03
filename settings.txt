@@ -1,2 +1,2 @@
-credspath="WSTLOG/creds.json"
+credspath="creds.json"
 firebaseappurlpath="pathtoyourfirebaseapp.com"

