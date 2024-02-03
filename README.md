@@ -1,3 +1,4 @@
+<p align="center"><img src="https://github.com/Liammkr/WSTMAIL/blob/main/WSTLOGO.png?raw=true"height="200"></p>
 Importing Necessary Modules: The script begins by importing required modules. These include firebase_admin for Firebase operations, re for handling regular expressions, datetime for managing timestamps, keyboard for capturing keystrokes, getpass for retrieving the current username, and PIL for potential image processing tasks.
 
 Initializing Variables: It obtains the current username of the system user and initializes a string variable keylogs with the message "[START LOG] ". Additionally, it sets up counters for tracking keystrokes.
